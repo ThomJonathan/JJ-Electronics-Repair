@@ -19,7 +19,7 @@ export default async function ProductsPage() {
 
       <div className="toolbar">
         <div className="subtle">{categories.length} categor{categories.length === 1 ? "y" : "ies"}</div>
-        <div className="stack-h" style={{ gap: 8 }}>
+        <div className="stack-h new-product-form-container" style={{ gap: 8 }}>
           <NewProductForm categories={categories} />
           <NewCategoryForm />
         </div>

@@ -36,7 +36,7 @@ export default function NewProductForm({ categories }: { categories: Category[] 
   }
 
   return (
-    <form onSubmit={handleSubmit} className="card">
+    <form onSubmit={handleSubmit} className="card new-product-form-card">
       <div className="section-title">Add Product</div>
       <div className="field">
         <label>Product Name</label>

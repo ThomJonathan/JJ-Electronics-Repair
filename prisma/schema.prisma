@@ -13,17 +13,18 @@ model Category {
 }
 
 model Product {
-  id             Int      @id @default(autoincrement())
-  sku            String?  @unique
-  name           String
-  categoryId     Int?
-  category       Category? @relation(fields: [categoryId], references: [id])
-  brand          String?
-  description    String?
-  reorderLevel   Int      @default(5)
-  avgCost        Decimal  @default(0) @db.Decimal(12, 2) // weighted-average cost, updated on receiving
-  isActive       Boolean  @default(true)
-  createdAt      DateTime @default(now())
+  id           Int       @id @default(autoincrement())
+  sku          String?   @unique
+  name         String
+  categoryId   Int?
+  category     Category? @relation(fields: [categoryId], references: [id])
+  brand        String?
+  description  String?
+  reorderLevel Int       @default(5)
+  avgCost      Decimal   @default(0) @db.Decimal(12, 2) // weighted-average cost, updated on receiving
+  sellingPrice Decimal   @default(0) @db.Decimal(12, 2)
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
 
   purchaseOrderItems PurchaseOrderItem[]
   saleItems          SaleItem[]
@@ -31,7 +32,7 @@ model Product {
 }
 
 model Supplier {
-  id             Int      @id @default(autoincrement())
+  id             Int             @id @default(autoincrement())
   name           String
   phone          String?
   notes          String?
@@ -46,28 +47,28 @@ enum PurchaseOrderStatus {
 }
 
 model PurchaseOrder {
-  id            Int                 @id @default(autoincrement())
-  supplierId    Int?
-  supplier      Supplier?           @relation(fields: [supplierId], references: [id])
-  referenceNo   String?
-  orderDate     DateTime            @default(now()) @db.Date
-  expectedDate  DateTime?           @db.Date
-  status        PurchaseOrderStatus @default(pending)
-  createdAt     DateTime            @default(now())
+  id           Int                 @id @default(autoincrement())
+  supplierId   Int?
+  supplier     Supplier?           @relation(fields: [supplierId], references: [id])
+  referenceNo  String?
+  orderDate    DateTime            @default(now()) @db.Date
+  expectedDate DateTime?           @db.Date
+  status       PurchaseOrderStatus @default(pending)
+  createdAt    DateTime            @default(now())
 
   items              PurchaseOrderItem[]
   goodsReceivedNotes GoodsReceivedNote[]
 }
 
 model PurchaseOrderItem {
-  id                Int           @id @default(autoincrement())
-  purchaseOrderId   Int
-  purchaseOrder     PurchaseOrder @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
-  productId         Int
-  product           Product       @relation(fields: [productId], references: [id])
-  quantityOrdered   Int
-  quantityReceived  Int           @default(0)
-  unitCost          Decimal       @db.Decimal(12, 2)
+  id               Int           @id @default(autoincrement())
+  purchaseOrderId  Int
+  purchaseOrder    PurchaseOrder @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
+  productId        Int
+  product          Product       @relation(fields: [productId], references: [id])
+  quantityOrdered  Int
+  quantityReceived Int           @default(0)
+  unitCost         Decimal       @db.Decimal(12, 2)
 
   goodsReceivedItems GoodsReceivedItem[]
 }
@@ -83,12 +84,12 @@ model GoodsReceivedNote {
 }
 
 model GoodsReceivedItem {
-  id        Int               @id @default(autoincrement())
-  grnId     Int
-  grn       GoodsReceivedNote @relation(fields: [grnId], references: [id], onDelete: Cascade)
-  poItemId  Int
-  poItem    PurchaseOrderItem @relation(fields: [poItemId], references: [id])
-  quantity  Int
+  id       Int               @id @default(autoincrement())
+  grnId    Int
+  grn      GoodsReceivedNote @relation(fields: [grnId], references: [id], onDelete: Cascade)
+  poItemId Int
+  poItem   PurchaseOrderItem @relation(fields: [poItemId], references: [id])
+  quantity Int
 }
 
 enum MovementType {
@@ -98,14 +99,14 @@ enum MovementType {
 }
 
 model StockMovement {
-  id             Int          @id @default(autoincrement())
-  productId      Int
-  product        Product      @relation(fields: [productId], references: [id])
-  movementType   MovementType
-  quantity       Int          // positive = stock in, negative = stock out
-  referenceType  String?      // 'purchase_order_item' | 'sale_item' | 'manual'
-  referenceId    Int?
-  createdAt      DateTime     @default(now())
+  id            Int          @id @default(autoincrement())
+  productId     Int
+  product       Product      @relation(fields: [productId], references: [id])
+  movementType  MovementType
+  quantity      Int // positive = stock in, negative = stock out
+  referenceType String? // 'purchase_order_item' | 'sale_item' | 'manual'
+  referenceId   Int?
+  createdAt     DateTime     @default(now())
 }
 
 model Sale {

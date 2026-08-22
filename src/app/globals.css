@@ -370,6 +370,32 @@ a {
   flex-wrap: wrap;
 }
 
+@media (max-width: 899px) {
+  .new-product-form-container:has(.new-product-form-card) {
+    width: 100%;
+  }
+  .new-product-form-card {
+    width: 100%;
+  }
+}
+
+@media (min-width: 900px) {
+  .toolbar:has(.new-product-form-card) {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .toolbar:has(.new-product-form-card) .subtle {
+    grid-row: 2;
+  }
+  .new-product-form-container:has(.new-product-form-card) {
+    width: 100%;
+    grid-row: 1;
+  }
+  .new-product-form-card {
+    width: 100%;
+  }
+}
+
 /* ---------------------------------------------------------------- */
 /* buttons                                                           */
 /* ---------------------------------------------------------------- */
