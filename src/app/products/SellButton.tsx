@@ -15,7 +15,9 @@ export default function SellButton({
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [quantity, setQuantity] = useState("1");
-  const [unitPrice, setUnitPrice] = useState(suggestedPrice ? String(suggestedPrice) : "");
+  const [unitPrice, setUnitPrice] = useState(
+    suggestedPrice !== undefined && suggestedPrice !== null ? String(suggestedPrice) : ""
+  );
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
@@ -25,7 +27,7 @@ export default function SellButton({
 
   if (!open) {
     return (
-      <button className="btn btn-sm btn-primary" onClick={() => setOpen(true)}>
+      <button className="btn btn-xs btn-primary" onClick={() => setOpen(true)}>
         Sell
       </button>
     );
@@ -88,12 +90,12 @@ export default function SellButton({
         aria-label="Sale price"
         placeholder="Price"
       />
-      <button disabled={saving} className="btn btn-sm btn-primary">
+      <button disabled={saving} className="btn btn-xs btn-primary">
         {saving ? "..." : "Mark as Sold"}
       </button>
       <button
         type="button"
-        className="btn btn-sm btn-ghost"
+        className="btn btn-xs btn-ghost"
         onClick={() => {
           setOpen(false);
           setError("");
