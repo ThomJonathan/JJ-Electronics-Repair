@@ -1,11 +1,14 @@
+
 {
   "name": "gadget-shop",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "postinstall": "prisma generate",
     "build": "next build",
     "start": "next start",
+
     "lint": "eslint"
   },
   "dependencies": {
@@ -31,3 +34,4 @@
     "typescript": "^5"
   }
 }
+
